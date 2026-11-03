@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D 모델 & 스프레드시트 대시보드</title>
+    <!-- Google Model Viewer 라이브러리 로드 -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            color: #64748b;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* 3D 뷰어 스타일 */
+        model-viewer {
+            width: 100%;
+            height: 450px;
+            background-color: #f8fafc;
+            --poster-color: transparent;
+        }
+
+        .viewer-container {
+            position: relative;
+            flex: 1;
+        }
+
+        .hint-badge {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.75);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        /* 스프레드시트 iframe 스타일 */
+        .iframe-container {
+            width: 100%;
+            height: 450px;
+            flex: 1;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>인터랙티브 3D 대시보드</h1>
+        <p>구글 드라이브 3D 모델과 구글 스프레드시트 데이터 연동 화면입니다.</p>
+    </header>
+
+    <main class="container">
+        <!-- 3D 모델 뷰어 카드 -->
+        <div class="card">
+            <div class="card-header">
+                📦 3D 모델 뷰어
+            </div>
+            <div class="viewer-container">
+                <!-- 
+                  아래 src 속성에 앞서 안내해 드린 구글 드라이브 직접 다운로드 링크를 넣어주세요.
+                  형식: https://drive.google.com/uc?export=download&id=파일_ID
+                -->
+                <model-viewer 
+                    src="https://drive.google.com/uc?export=download&id=1rGnj8rStwNkJ4CLqO6puU9QuDv0pONnc" 
+                    alt="구글 드라이브 3D 모델" 
+                    auto-rotate 
+                    camera-controls 
+                    shadow-intensity="1"
+                    exposure="1">
+                </model-viewer>
+                <div class="hint-badge">마우스로 드래그하여 모델을 회전해보세요</div>
+            </div>
+        </div>
+
+        <!-- 스프레드시트 카드 -->
+        <div class="card">
+            <div class="card-header">
+                📊 관련 데이터 시트
+            </div>
+            <div class="iframe-container">
+                <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXYFYzGWMQnAPLxG41hKBxdkTe2WR0k8_dgNvMPRABVOUwr7YMiZUNGlGx4KC4FCMr5HYjXGkSLNx-/pubhtml?gid=246480233&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
